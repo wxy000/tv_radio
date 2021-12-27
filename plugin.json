@@ -1,0 +1,33 @@
+{
+	"main":"index.html",
+	"logo": "logo.png",
+	"platform": ["win32", "darwin", "linux"],
+	"development": {
+		"main": ""
+	},
+	"pluginSetting": {
+		"single": false,
+		"height": 0
+	},
+	"features": [
+		{
+			"code": "tv_radio",
+			"explain": "电视-电台",
+			"cmds": [
+				"tv",
+				"radio",
+				"zb",
+				"live",
+				"直播",
+				"电视-电台",
+				"收音机",
+				"syj",
+				"ds",
+				{
+					"type": "over",
+					"label": "电视-电台"
+				}
+			]
+		}
+	]
+}

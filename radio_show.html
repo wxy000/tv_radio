@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="IE=edge" >
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="layui/css/layui.css">
+</head>
+
+<body style="background-image:url(img/live/radio.gif);background-size:100% 100%; background-attachment: fixed;text-align:center;">
+	
+	<div id="dplayer" hidden></div>
+	<div id="title" style="position:relative;top:10px;color:red"></div>
+	<div id="play_pause" style="position:relative;top:20px;"></div>
+	<div id="volume" class="demo-slider" style="position:relative;top:30px;width:80%;margin-left:10%;"></div>
+
+	<script type="text/javascript" src="js/hls.min.js"></script>
+	<script type="text/javascript" src="js/flv.min.js"></script>
+	<script type="text/javascript" src="js/dash.all.min.js"></script>
+	<script type="text/javascript" src="js/shaka-player.compiled.js"></script>
+	<script type="text/javascript" src="js/webtorrent.min.js"></script>
+	<script type="text/javascript" src="js/DPlayer.min.js"></script>
+	<script src="layui/layui.js"></script>
+	<script>
+		function getQueryString(name){
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return decodeURIComponent(r[2]);
+			return "";
+		}
+	</script>
+	<script>
+		layui.use(['layer','util','slider'], function(){
+			var layer = layui.layer
+			   ,slider = layui.slider
+			   ,$ = layui.$;
+			   
+			//判断是否为直播
+			var live_fou = true;
+			if (getQueryString('live')==='Y'){
+				live_fou = true;
+			}
+			if (getQueryString('live')==='N'){
+				live_fou = false;
+			}
+			
+			const dp = new DPlayer({
+				container: document.getElementById('dplayer'),
+				autoplay: true,
+				screenshot: true,
+				live: live_fou,
+				volume: 1,
+				video: {
+					url: getQueryString('url'),
+					type: 'auto',
+				}
+			});
+			
+			$("#title").empty();
+			$("#title").append('<span>'+getQueryString("title")+'</span>');
+			dp.on('error',function(event) {
+				$("#title").empty();
+				$("#title").append('<span>播放错误</span>');
+			});
+			
+			/*****************播放暂停*****************/
+			//初始化
+			$("#play_pause").empty();
+			$("#play_pause").append('<i class="layui-icon layui-icon-pause" style="font-size: 30px; color: #8B8989;"></i>');
+			//播放暂停调节
+			$("#play_pause").click(function(){
+				dp.toggle();
+			});
+			dp.on('pause',function(){
+				$("body").css("background-image","url(img/live/radio-g.png)");
+				$("#play_pause").empty();
+				$("#play_pause").append('<i class="layui-icon layui-icon-play" style="font-size: 30px; color: #8B8989;"></i>');
+			});
+			dp.on('play',function(){
+				$("body").css("background-image","url(img/live/radio.gif)");
+				$("#play_pause").empty();
+				$("#play_pause").append('<i class="layui-icon layui-icon-pause" style="font-size: 30px; color: #8B8989;"></i>');
+			});
+			/*****************播放暂停*****************/
+			
+			//音量
+			slider.render({
+				elem: '#volume'
+				,value: 100 //初始值
+				,theme: '#58B0FF'
+				,change: function(value){
+					dp.volume(value/100, true, false);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

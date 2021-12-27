@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="IE=edge" >
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+</head>
+<body>
+	
+	<div id="dplayer"></div>
+
+	<script type="text/javascript" src="js/hls.min.js"></script>
+	<script type="text/javascript" src="js/flv.min.js"></script>
+	<script type="text/javascript" src="js/dash.all.min.js"></script>
+	<script type="text/javascript" src="js/shaka-player.compiled.js"></script>
+	<script type="text/javascript" src="js/webtorrent.min.js"></script>
+	<script type="text/javascript" src="js/DPlayer.min.js"></script>
+	<script>
+		function getQueryString(name){
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return decodeURIComponent(r[2]);
+			return "";
+		}
+	</script>
+	<script>
+		//判断是否为直播
+		var live_fou = true;
+		if (getQueryString('live')==='Y'){
+			live_fou = true;
+		}
+		if (getQueryString('live')==='N'){
+			live_fou = false;
+		}
+		
+		const dp = new DPlayer({
+			container: document.getElementById('dplayer'),
+			autoplay: true,
+			screenshot: true,
+			live: live_fou,
+			video: {
+                url: getQueryString('url'),
+                type: 'auto',
+            }
+		});
+		dp.fullScreen.request('web');
+	</script>
+</body>
+</html>
