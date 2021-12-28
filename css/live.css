@@ -1,0 +1,44 @@
+html,body{height:100%}
+.left_menu_img{width:20px;margin-top:-5px;}
+
+.cc {text-align:center;max-width:113px;height:113px;}
+.imgg {width:60px;height:60px;margin-top:5px;}
+.radio_row_ss_ss_dj {text-align:center;line-height:30px;height:30px;border-bottom:1px solid #e2e2e2;overflow:hidden;}
+
+.footToolBar {
+	position:absolute;
+	bottom:0px;
+	z-index:2;
+	width:85%;
+	height:40px;
+	line-height:40px;
+	border-top:1px solid #ccc;
+	overflow:hidden;
+}
+
+.layui-table-view {margin:0;}
+
+/* 动画 */
+@-webkit-keyframes layui-rl{ /* 从右往左滑入 */
+  from {-webkit-transform: translate3d(100%, 0, 0);}
+  to {-webkit-transform: translate3d(0, 0, 0);}
+}
+@keyframes layui-rl{
+  from {transform: translate3d(100%, 0, 0);}
+  to {transform: translate3d(0, 0, 0);}
+}
+.layui-anim-rl{-webkit-animation-name: layui-rl; animation-name: layui-rl;}
+
+@-webkit-keyframes layui-lr{ /* 从右往左滑入 */
+  from {-webkit-transform: translate3d(0 0, 0); opacity: 1;}
+  to {-webkit-transform: translate3d(100%, 0, 0); opacity: 1;}
+}
+@keyframes layui-lr{
+  from {transform: translate3d(0, 0, 0);}
+  to {transform: translate3d(100%, 0, 0);}
+}
+.layui-anim-lr{-webkit-animation-name: layui-lr; animation-name: layui-lr;}
+.layui-anim-rl.layer-anim-close{-webkit-animation-name: layui-lr; animation-name: layui-lr;}
+
+/* 右侧面板 */
+.layui-layer-adminRight{top: 0 !important; bottom: 40px; box-shadow: 1px 1px 10px rgba(0,0,0,.1); border-radius: 0; overflow: auto;}
